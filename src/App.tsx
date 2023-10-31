@@ -2,8 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 
 import { useRef } from "react";
-import Pedal from "./Pedal";
+// import Pedal from "./Pedal";
 import * as THREE from "three";
+import { Model } from "./23";
 
 function App() {
   const cameraControlRef = useRef<CameraControls | null>(null);
@@ -30,7 +31,8 @@ function App() {
           <boxGeometry args={[20, 1.5, 20]} />
           <meshStandardMaterial color={new THREE.Color("yellow")} />
         </mesh>
-        <Pedal />
+        {/* <Pedal /> */}
+        <Model />
       </Canvas>
     </div>
   );

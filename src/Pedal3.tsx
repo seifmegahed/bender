@@ -7,6 +7,7 @@ import * as THREE from "three";
 // import React, { useRef } from 'react'
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { GroupProps } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -38,14 +39,24 @@ type GLTFResult = GLTF & {
 };
 
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
-
-export function Model3(props: JSX.IntrinsicElements["group"]) {
+interface Model3Props extends GroupProps {
+  knobs: {
+    knob1: number;
+    knob2: number;
+    knob3: number;
+    knob4: number;
+    knob5: number;
+    knob6: number;
+  };
+}
+export function Model3({ knobs, ...props }: Model3Props) {
   const { nodes, materials } = useGLTF("/pedal3.gltf") as GLTFResult;
+  const { knob1, knob2, knob3, knob4, knob5, knob6 } = knobs;
+  const getRads = (value: number) => Math.PI * (value / 100);
   return (
     <group {...props} dispose={null}>
       <mesh
         castShadow
-        // receiveShadow
         geometry={nodes.PlateB.geometry}
         material={materials["Powder Black 2"]}
         position={[0.395, -0.354, 0.549]}
@@ -61,98 +72,97 @@ export function Model3(props: JSX.IntrinsicElements["group"]) {
       />
       <group position={[1.327, 0.06, 2.178]} scale={0.064}>
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.PCB_1.geometry}
           material={materials["Plastic Rough Black"]}
         />
-        <mesh
-          // castShadow
-          // receiveShadow
-          geometry={nodes.PCB_2.geometry}
-          material={materials.Brass}
-        />
+        <mesh geometry={nodes.PCB_2.geometry} material={materials.Brass} />
       </group>
-      <group position={[-2.207, 1.241, -2.423]} scale={0.064}>
+      <group
+        position={[-2.207, 1.241, -2.423]}
+        scale={0.064}
+        rotation={[0, getRads(knob1), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob1_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob1_2.geometry}
           material={materials["Stainless Steel"]}
         />
       </group>
-      <group position={[-2.207, 1.241, 0.169]} scale={0.064}>
+      <group
+        position={[-2.207, 1.241, 0.169]}
+        scale={0.064}
+        rotation={[0, getRads(knob4), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob4_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob4_2.geometry}
           material={materials["Stainless Steel"]}
         />
       </group>
-      <group position={[0.037, 1.241, 0.169]} scale={0.064}>
+      <group
+        position={[0.037, 1.241, 0.169]}
+        scale={0.064}
+        rotation={[0, getRads(knob5), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob5_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob5_2.geometry}
           material={materials["Stainless Steel"]}
         />
       </group>
-      <group position={[2.281, 1.241, 0.169]} scale={0.064}>
+      <group
+        position={[2.281, 1.241, 0.169]}
+        scale={0.064}
+        rotation={[0, getRads(knob6), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob6_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob6_2.geometry}
           material={materials["Stainless Steel"]}
         />
       </group>
-      <group position={[2.281, 1.241, -2.423]} scale={0.064}>
+      <group
+        position={[2.281, 1.241, -2.423]}
+        scale={0.064}
+        rotation={[0, getRads(knob3), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob3_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob3_2.geometry}
           material={materials["Stainless Steel"]}
         />
       </group>
-      <group position={[0.037, 1.241, -2.423]} scale={0.064}>
+      <group
+        position={[0.037, 1.241, -2.423]}
+        scale={0.064}
+        rotation={[0, getRads(knob2), 0]}
+      >
         <mesh
           castShadow
-          // receiveShadow
           geometry={nodes.Knob2_1.geometry}
           material={materials["Plastic Black"]}
         />
         <mesh
-          // castShadow
-          // receiveShadow
           geometry={nodes.Knob2_2.geometry}
           material={materials["Stainless Steel"]}
         />

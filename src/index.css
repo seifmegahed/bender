@@ -7,3 +7,46 @@ body {
 .app {
   height: 100vh;
 }
+
+.main-body {
+}
+
+.controls-container {
+  position: absolute;
+  z-index: 100;
+  width: 20%; 
+  margin: 100px;
+}
+
+/* The slider itself */
+.slider {
+  direction: rtl;
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  margin: 20px 0;
+  width: 100%; /* Full-width */
+  height: 10px; /* Specified height */
+  background: #e5e5e5; /* Grey background */
+  outline: none; /* Remove outline */
+  /* opacity: 0.7;  */
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  border-radius: 10px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 0.7; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  border-radius: 50%;
+  background: #dabbc1; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}

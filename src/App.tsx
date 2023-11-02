@@ -4,33 +4,100 @@ import { Canvas } from "@react-three/fiber";
 // import { useRef } from "react";
 import * as THREE from "three";
 import { Model3 } from "./Pedal3";
-
+import { useState } from "react";
 function App() {
+  const [values, setValues] = useState({
+    knob1: 0,
+    knob2: 0,
+    knob3: 0,
+    knob4: 0,
+    knob5: 0,
+    knob6: 0,
+  });
   // const cameraControlRef = useRef<CameraControls | null>(null);
+
+  const handleChange = (name: string, value: string) => {
+    setValues((prev) => {
+      const newValues = { ...prev, [name]: parseInt(value) };
+      console.log(newValues);
+      return newValues;
+    });
+  };
 
   return (
     <div className="app">
+      <div className="main-body">
+        <div className="controls-container">
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob1}
+            onChange={(event) => handleChange("knob1", event.target.value)}
+            className="slider"
+          />
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob2}
+            onChange={(event) => handleChange("knob2", event.target.value)}
+            className="slider"
+          />
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob3}
+            onChange={(event) => handleChange("knob3", event.target.value)}
+            className="slider"
+          />
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob4}
+            onChange={(event) => handleChange("knob4", event.target.value)}
+            className="slider"
+          />
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob5}
+            onChange={(event) => handleChange("knob5", event.target.value)}
+            className="slider"
+          />
+          <input
+            type="range"
+            min={-125}
+            max={25}
+            value={values.knob6}
+            onChange={(event) => handleChange("knob6", event.target.value)}
+            className="slider"
+          />
+        </div>
+      </div>
       <Canvas
         shadows
         camera={{ fov: 45, position: [0, 0, 20] }}
-        onCreated={({ camera, gl, scene }) => {
+        onCreated={({ camera, gl }) => {
           camera.lookAt(new THREE.Vector3(0, 0, 0));
-          scene.background = new THREE.Color("pink");
           gl.shadowMap.enabled = true;
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
         }}
       >
         {/* <CameraControls ref={cameraControlRef} /> */}
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.5} />
         <directionalLight
           color="white"
           castShadow
-          intensity={8}
-          position={[-30, 5, -7]}
-          // position={[-6, 30, -20]}
+          intensity={5}
+          position={[-115, 25, 0]}
           lookAt={() => new THREE.Vector3(0, -9, 0)}
         />
         <Model3
+          knobs={values}
           rotation={[Math.PI * 0.5, 0, Math.PI * 0.3]}
           position={[10, 0, 0]}
         />
@@ -39,17 +106,6 @@ function App() {
           <meshStandardMaterial color={new THREE.Color("pink")} />
         </mesh>
       </Canvas>
-      <div className="controls-container">
-        <div className="slide-container">
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="50"
-            className="slider"
-          />
-        </div>
-      </div>
     </div>
   );
 }

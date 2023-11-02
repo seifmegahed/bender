@@ -19,7 +19,6 @@ function App() {
   const handleChange = (name: string, value: string) => {
     setValues((prev) => {
       const newValues = { ...prev, [name]: parseInt(value) };
-      console.log(newValues);
       return newValues;
     });
   };
@@ -27,9 +26,11 @@ function App() {
   return (
     <div className="app">
       <div className="main-body">
+        <h1>Bender Instruments</h1> 
         <div className="controls-container">
           <input
             type="range"
+            aria-orientation="vertical"
             min={-125}
             max={25}
             value={values.knob1}
@@ -91,7 +92,7 @@ function App() {
         <ambientLight intensity={0.5} />
         <directionalLight
           color="white"
-          castShadow
+          // castShadow
           intensity={5}
           position={[-115, 25, 0]}
           lookAt={() => new THREE.Vector3(0, -9, 0)}
@@ -102,7 +103,7 @@ function App() {
           position={[10, 0, 0]}
         />
         <mesh receiveShadow position={[0, -9, 0]}>
-          <boxGeometry args={[80, 5, 50]} />
+          <boxGeometry args={[100, 5, 50]} />
           <meshStandardMaterial color={new THREE.Color("pink")} />
         </mesh>
       </Canvas>

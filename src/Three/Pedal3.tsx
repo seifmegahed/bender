@@ -8,6 +8,16 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { GroupProps } from "@react-three/fiber";
+import Knob from "./Knob";
+
+const knobPositions = [
+  new THREE.Vector3(-2.207, 1.241, -2.423),
+  new THREE.Vector3(0.037, 1.241, -2.423),
+  new THREE.Vector3(2.281, 1.241, -2.423),
+  new THREE.Vector3(-2.207, 1.241, 0.169),
+  new THREE.Vector3(0.037, 1.241, 0.169),
+  new THREE.Vector3(2.281, 1.241, 0.169),
+];
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -17,16 +27,6 @@ type GLTFResult = GLTF & {
     PCB_2: THREE.Mesh;
     Knob1_1: THREE.Mesh;
     Knob1_2: THREE.Mesh;
-    Knob4_1: THREE.Mesh;
-    Knob4_2: THREE.Mesh;
-    Knob5_1: THREE.Mesh;
-    Knob5_2: THREE.Mesh;
-    Knob6_1: THREE.Mesh;
-    Knob6_2: THREE.Mesh;
-    Knob3_1: THREE.Mesh;
-    Knob3_2: THREE.Mesh;
-    Knob2_1: THREE.Mesh;
-    Knob2_2: THREE.Mesh;
   };
   materials: {
     ["Powder Black 2"]: THREE.MeshStandardMaterial;
@@ -44,7 +44,6 @@ interface Model3Props extends GroupProps {
 }
 export function Model3({ knobs, ...props }: Model3Props) {
   const { nodes, materials } = useGLTF("/pedal3.gltf") as GLTFResult;
-  const getRads = (value: number) => Math.PI * (value / 100);
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -69,96 +68,17 @@ export function Model3({ knobs, ...props }: Model3Props) {
         />
         <mesh geometry={nodes.PCB_2.geometry} material={materials.Brass} />
       </group>
-      <group
-        position={[-2.207, 1.241, -2.423]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[0]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob1_1.geometry}
-          material={materials["Plastic Black"]}
+      {knobs.map((knobRotation, index) => (
+        <Knob
+          position={knobPositions[index]}
+          scale={0.064}
+          rotation={knobRotation}
+          bodyGeometry={nodes.Knob1_1.geometry}
+          capGeometry={nodes.Knob1_2.geometry}
+          bodyMaterial={materials["Plastic Black"]}
+          capMaterial={materials["Stainless Steel"]}
         />
-        <mesh
-          geometry={nodes.Knob1_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
-      <group
-        position={[-2.207, 1.241, 0.169]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[3]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob4_1.geometry}
-          material={materials["Plastic Black"]}
-        />
-        <mesh
-          geometry={nodes.Knob4_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
-      <group
-        position={[0.037, 1.241, 0.169]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[4]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob5_1.geometry}
-          material={materials["Plastic Black"]}
-        />
-        <mesh
-          geometry={nodes.Knob5_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
-      <group
-        position={[2.281, 1.241, 0.169]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[5]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob6_1.geometry}
-          material={materials["Plastic Black"]}
-        />
-        <mesh
-          geometry={nodes.Knob6_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
-      <group
-        position={[2.281, 1.241, -2.423]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[2]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob3_1.geometry}
-          material={materials["Plastic Black"]}
-        />
-        <mesh
-          geometry={nodes.Knob3_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
-      <group
-        position={[0.037, 1.241, -2.423]}
-        scale={0.064}
-        rotation={[0, getRads(knobs[1]), 0]}
-      >
-        <mesh
-          castShadow
-          geometry={nodes.Knob2_1.geometry}
-          material={materials["Plastic Black"]}
-        />
-        <mesh
-          geometry={nodes.Knob2_2.geometry}
-          material={materials["Stainless Steel"]}
-        />
-      </group>
+      ))}
     </group>
   );
 }

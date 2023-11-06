@@ -40,18 +40,10 @@ type GLTFResult = GLTF & {
 
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 interface Model3Props extends GroupProps {
-  knobs: {
-    knob1: number;
-    knob2: number;
-    knob3: number;
-    knob4: number;
-    knob5: number;
-    knob6: number;
-  };
+  knobs: number[];
 }
 export function Model3({ knobs, ...props }: Model3Props) {
   const { nodes, materials } = useGLTF("/pedal3.gltf") as GLTFResult;
-  const { knob1, knob2, knob3, knob4, knob5, knob6 } = knobs;
   const getRads = (value: number) => Math.PI * (value / 100);
   return (
     <group {...props} dispose={null}>
@@ -80,7 +72,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[-2.207, 1.241, -2.423]}
         scale={0.064}
-        rotation={[0, getRads(knob1), 0]}
+        rotation={[0, getRads(knobs[0]), 0]}
       >
         <mesh
           castShadow
@@ -95,7 +87,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[-2.207, 1.241, 0.169]}
         scale={0.064}
-        rotation={[0, getRads(knob4), 0]}
+        rotation={[0, getRads(knobs[3]), 0]}
       >
         <mesh
           castShadow
@@ -110,7 +102,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[0.037, 1.241, 0.169]}
         scale={0.064}
-        rotation={[0, getRads(knob5), 0]}
+        rotation={[0, getRads(knobs[4]), 0]}
       >
         <mesh
           castShadow
@@ -125,7 +117,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[2.281, 1.241, 0.169]}
         scale={0.064}
-        rotation={[0, getRads(knob6), 0]}
+        rotation={[0, getRads(knobs[5]), 0]}
       >
         <mesh
           castShadow
@@ -140,7 +132,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[2.281, 1.241, -2.423]}
         scale={0.064}
-        rotation={[0, getRads(knob3), 0]}
+        rotation={[0, getRads(knobs[2]), 0]}
       >
         <mesh
           castShadow
@@ -155,7 +147,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       <group
         position={[0.037, 1.241, -2.423]}
         scale={0.064}
-        rotation={[0, getRads(knob2), 0]}
+        rotation={[0, getRads(knobs[1]), 0]}
       >
         <mesh
           castShadow

@@ -7,6 +7,7 @@ const ThreeCanvas = ({ knobs }: { knobs: number[] }) => {
   return (
     <Canvas
       shadows
+      frameloop="demand"
       camera={{ fov: 45, position: [0, 0, 20] }}
       onCreated={({ camera, gl }) => {
         camera.lookAt(new THREE.Vector3(0, 0, 0));

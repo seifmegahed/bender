@@ -40,9 +40,9 @@ type GLTFResult = GLTF & {
 
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 interface PedalProps extends GroupProps {
-  knobs: number[];
+  knobs?: number[];
 }
-const Pedal = ({ knobs, ...props }: PedalProps) => {
+const Pedal = ({ ...props }: PedalProps) => {
   const { nodes, materials } = useGLTF("/pedal3.gltf") as GLTFResult;
   return (
     <group {...props} dispose={null}>
@@ -68,12 +68,12 @@ const Pedal = ({ knobs, ...props }: PedalProps) => {
         />
         <mesh geometry={nodes.PCB_2.geometry} material={materials.Brass} />
       </group>
-      {knobs.map((knobRotation, index) => (
+      {knobPositions.map((position, index) => (
         <Knob
           key={`knob${index}`}
-          position={knobPositions[index]}
+          position={position}
           scale={0.064}
-          rotation={knobRotation}
+          // rotation={knobRotation}
           bodyGeometry={nodes.Knob1_1.geometry}
           capGeometry={nodes.Knob1_2.geometry}
           bodyMaterial={materials["Plastic Black"]}

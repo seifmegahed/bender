@@ -31,7 +31,7 @@ function App() {
           ))}
         </div> */}
       </div>
-      <ThreeCanvas knobs={/*values*/ []} />
+      <ThreeCanvas />
     </div>
   );
 }

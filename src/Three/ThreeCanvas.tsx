@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import Pedal from "./Pedal3";
 
-const ThreeCanvas = ({ knobs }: { knobs: number[] }) => {
+const ThreeCanvas = ({ knobs }: { knobs?: number[] }) => {
   // const cameraControlRef = useRef<CameraControls | null>(null);
   return (
     <Canvas

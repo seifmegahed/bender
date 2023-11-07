@@ -14,7 +14,7 @@ const Knob = ({
   bodyMaterial,
   capMaterial,
 }: {
-  rotation: number;
+  rotation?: number;
   position: THREE.Vector3;
   scale: number;
   bodyGeometry: THREE.BufferGeometry;
@@ -44,7 +44,7 @@ const Knob = ({
   const bind = useGesture({
     onDrag: ({ offset: [x, y] }) => {
       const dragValue = y / aspect || x / aspect;
-      console.log(dragValue);
+      // console.log(dragValue);
       if (dragValue > max) seDragRotation(max);
       else if (dragValue < min) seDragRotation(min);
       else seDragRotation(dragValue);
@@ -54,8 +54,6 @@ const Knob = ({
   });
 
   return (
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore 
     <group
       position={position}
       scale={scale}

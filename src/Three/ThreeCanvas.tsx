@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import { Model3 } from "./Pedal3";
+import Pedal from "./Pedal3";
 
 const ThreeCanvas = ({ knobs }: { knobs: number[] }) => {
   // const cameraControlRef = useRef<CameraControls | null>(null);
@@ -24,7 +24,7 @@ const ThreeCanvas = ({ knobs }: { knobs: number[] }) => {
         position={[-115, 25, 0]}
         lookAt={() => new THREE.Vector3(0, -9, 0)}
       />
-      <Model3
+      <Pedal
         knobs={knobs}
         rotation={[Math.PI * 0.5, 0, Math.PI * 0.3]}
         position={[10, 0, 0]}

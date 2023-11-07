@@ -11,12 +11,12 @@ import { GroupProps } from "@react-three/fiber";
 import Knob from "./Knob";
 
 const knobPositions = [
-  new THREE.Vector3(-2.207, 1.241, -2.423),
-  new THREE.Vector3(0.037, 1.241, -2.423),
-  new THREE.Vector3(2.281, 1.241, -2.423),
-  new THREE.Vector3(-2.207, 1.241, 0.169),
-  new THREE.Vector3(0.037, 1.241, 0.169),
-  new THREE.Vector3(2.281, 1.241, 0.169),
+  new THREE.Vector3(-2.207, 1.241, -2.423), // Blend
+  new THREE.Vector3(0.037, 1.241, -2.423), // Pace
+  new THREE.Vector3(2.281, 1.241, -2.423), // Flow
+  new THREE.Vector3(-2.207, 1.241, 0.169), // Mass
+  new THREE.Vector3(0.037, 1.241, 0.169), // Accent
+  new THREE.Vector3(2.281, 1.241, 0.169), // Load
 ];
 
 type GLTFResult = GLTF & {
@@ -39,10 +39,10 @@ type GLTFResult = GLTF & {
 };
 
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
-interface Model3Props extends GroupProps {
+interface PedalProps extends GroupProps {
   knobs: number[];
 }
-export function Model3({ knobs, ...props }: Model3Props) {
+const Pedal = ({ knobs, ...props }: PedalProps) => {
   const { nodes, materials } = useGLTF("/pedal3.gltf") as GLTFResult;
   return (
     <group {...props} dispose={null}>
@@ -70,6 +70,7 @@ export function Model3({ knobs, ...props }: Model3Props) {
       </group>
       {knobs.map((knobRotation, index) => (
         <Knob
+          key={`knob${index}`}
           position={knobPositions[index]}
           scale={0.064}
           rotation={knobRotation}
@@ -81,6 +82,8 @@ export function Model3({ knobs, ...props }: Model3Props) {
       ))}
     </group>
   );
-}
+};
 
 useGLTF.preload("/pedal3.gltf");
+
+export default Pedal;

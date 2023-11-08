@@ -22,25 +22,27 @@ const Knob = ({
   bodyMaterial: THREE.MeshStandardMaterial;
   capMaterial: THREE.MeshStandardMaterial;
 }) => {
-  // const rotationRads = Math.PI * (rotation / 100);
   const [bodyMat, setBodyMat] = useState(bodyMaterial);
-
-  const focusMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(0xb04759),
-  });
-  const handleFocus = () => setBodyMat(focusMaterial);
-  const handleUnFocus = () => setBodyMat(bodyMaterial);
+  const [dragRotation, seDragRotation] = useState(0);
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
-
-  const [dragRotation, seDragRotation] = useState(0);
-
-  // const [spring, set] = useSpring(() => ({
-  //   rotation: [0, 0, 0],
-  //   config: { friction: 10 },
-  // }));
   const max = 1;
   const min = -4;
+
+  const focusMaterial = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(0xff0000),
+  });
+
+  const handleFocus = () => {
+    setBodyMat(focusMaterial);
+    document.body.style.cursor = "pointer";
+  };
+
+  const handleUnFocus = () => {
+    setBodyMat(bodyMaterial);
+    document.body.style.cursor = "auto";
+  };
+
   const bind = useGesture({
     onDrag: ({ offset: [x, y] }) => {
       const dragValue = y / aspect || x / aspect;
@@ -51,9 +53,13 @@ const Knob = ({
       handleFocus();
     },
     onDragEnd: () => handleUnFocus(),
+    onPointerEnter: () => handleFocus(),
+    onPointerLeave: () => handleUnFocus(),
   });
 
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <group
       position={position}
       scale={scale}

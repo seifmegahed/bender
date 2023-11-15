@@ -29,10 +29,10 @@ const ThreeCanvas = ({ knobs }: { knobs?: number[] }) => {
         rotation={[Math.PI * 0.5, 0, Math.PI * 0.3]}
         position={[10, 0, 0]}
       />
-      <mesh receiveShadow position={[0, -9, 0]}>
+      {/* <mesh receiveShadow position={[0, -9, 0]}>
         <boxGeometry args={[100, 5, 50]} />
         <meshStandardMaterial color={new THREE.Color("pink")} />
-      </mesh>
+      </mesh> */}
     </Canvas>
   );
 };

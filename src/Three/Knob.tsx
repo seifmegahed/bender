@@ -23,7 +23,8 @@ const Knob = ({
   capMaterial: THREE.MeshStandardMaterial;
 }) => {
   const [bodyMat, setBodyMat] = useState(bodyMaterial);
-  const [dragRotation, seDragRotation] = useState(0);
+  const [dragRotation, setDragRotation] = useState(0);
+  const [localScale, setLocalScale] = useState(scale);
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
   const max = 1;
@@ -32,37 +33,45 @@ const Knob = ({
   const focusMaterial = new THREE.MeshStandardMaterial({
     color: new THREE.Color(0xff0000),
   });
-
   const handleFocus = () => {
     setBodyMat(focusMaterial);
+    setLocalScale(scale * 1.1)
     document.body.style.cursor = "pointer";
   };
 
   const handleUnFocus = () => {
     setBodyMat(bodyMaterial);
+    setLocalScale(scale)
     document.body.style.cursor = "auto";
   };
 
-  const bind = useGesture({
-    onDrag: ({ offset: [x, y] }) => {
-      const dragValue = y / aspect || x / aspect;
-      // console.log(dragValue);
-      if (dragValue > max) seDragRotation(max);
-      else if (dragValue < min) seDragRotation(min);
-      else seDragRotation(dragValue);
-      handleFocus();
+  const bind = useGesture(
+    {
+      onDrag: ({ offset }) => {
+        const dragValue = offset[1] / aspect;
+        setDragRotation(dragValue);
+        handleFocus();
+      },
+      onDragEnd: () => handleUnFocus(),
+      onPointerEnter: () => handleFocus(),
+      onPointerLeave: () => handleUnFocus(),
     },
-    onDragEnd: () => handleUnFocus(),
-    onPointerEnter: () => handleFocus(),
-    onPointerLeave: () => handleUnFocus(),
-  });
+    {
+      drag: {
+        bounds: {
+          top: min * aspect,
+          bottom: max * aspect,
+        },
+      },
+    }
+  );
 
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     <group
       position={position}
-      scale={scale}
+      scale={localScale}
       rotation={[0, dragRotation, 0]}
       {...(bind() ?? {})}
     >
